@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 app.config['SECRETE_KEY'] = 'sshh'
@@ -11,7 +11,8 @@ def home():
 
 @socketio.on('ws')
 def ws(value):
-    return 'through ws'
+    print('in socketio ws')
+    emit('ws', 'through ws')
 
 if __name__ == '__main__':
     socketio.run(app)
