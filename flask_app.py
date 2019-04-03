@@ -14,5 +14,13 @@ def ws(value):
     print('in socketio ws')
     emit('ws', 'through ws')
 
+@socketio.on('connect')
+def ws():
+    print('in connect socketio ws')
+
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
+
 if __name__ == '__main__':
     socketio.run(app)
