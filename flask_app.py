@@ -7,6 +7,7 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def home():
+    print('on home')
     return 'A Hello, from home'
 
 @socketio.on('ws')
@@ -23,4 +24,5 @@ def test_disconnect():
     print('Client disconnected')
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host='0.0.0.0')
+    # app.run(host='0.0.0.0')
