@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_socketio import SocketIO, emit
-from tasks import app_task, app as celery
+from tasks import app_task, task_switch, app as celery
 # from celery.result import AsyncResult
 
 app = Flask(__name__)
@@ -32,6 +32,13 @@ def check_work(id):
 def ws(value):
     print('in socketio edited in docker ws')
     emit('ws', 'through ws')
+
+@socketio.on('tasks')
+def tasks(value):
+    print(value)
+    print('in socketio task')
+    response = task_switch(value.get('task')).delay(int(value.get('value')))    
+    emit('ws', 'through ws' + response.get())    
 
 @socketio.on('connect')
 def ws():
