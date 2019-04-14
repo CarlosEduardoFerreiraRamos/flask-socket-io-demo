@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_socketio import SocketIO, emit
 from tasks import app_task, task_switch, app as celery
 # from celery.result import AsyncResult
@@ -37,6 +37,7 @@ def ws(value):
 def tasks(value):
     print(value)
     print('in socketio task')
+    print(request.remote_addr)
     response = task_switch(value.get('task')).delay(int(value.get('value')))    
     emit('ws', 'through ws' + response.get())    
 
